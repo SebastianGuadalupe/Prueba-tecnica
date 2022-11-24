@@ -1,0 +1,36 @@
+version: '3.8'
+services:
+  mongodb:
+    env_file: ./.env
+    image: mongo
+    restart: unless-stopped
+    ports:
+      - $MONGODB_LOCAL_PORT:$MONGODB_DOCKER_PORT
+    volumes:
+      - db:/data/db
+  rickandmorty-frontend:
+    env_file: ./.env
+    build: ./RickAndMortyAPI_Front
+    ports:
+      - $VITE_LOCAL_PORT:$VITE_DOCKER_PORT
+    environment:
+      VITE_PROXY_API: http://rickandmorty-backend:8000/
+  rickandmorty-backend:
+    depends_on:
+      - mongodb
+    env_file: ./.env
+    build: ./RickAndMorty_CommentAPI
+    restart: unless-stopped
+    ports:
+      - $NODE_LOCAL_PORT:$NODE_DOCKER_PORT
+    environment:
+      - DB_HOST=mongodb
+      - DB_NAME=$MONGODB_DATABASE
+      - DB_PORT=$MONGODB_DOCKER_PORT
+      - NODE_LOCAL_PORT=$NODE_LOCAL_PORT
+      - NODE_DOCKER_PORT=$NODE_DOCKER_PORT
+    stdin_open: true
+    tty: true
+
+volumes:
+  db:

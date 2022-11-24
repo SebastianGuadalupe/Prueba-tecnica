@@ -1,0 +1,6 @@
+[submodule "RickAndMorty_CommentAPI"]
+	path = RickAndMorty_CommentAPI
+	url = https://github.com/SebastianGuadalupe/RickAndMorty_CommentAPI
+[submodule "RickAndMortyAPI_Front"]
+	path = RickAndMortyAPI_Front
+	url = https://github.com/SebastianGuadalupe/RickAndMortyAPI_Front
